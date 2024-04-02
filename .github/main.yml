@@ -3,7 +3,7 @@ name: Alicja's CI/CD with Docker
 
 on: 
   push: 
-    tranches: 
+    branches: 
       -  master
 
 jobs: 
@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Frontend Docker image
-        run: docker build -l reactapp1 -f Dockerfile . 
+        run: docker build -t reactapp1 -f Dockerfile  
 
       - name: Push Frontend Docker image to Docker Hub
         run: | 
