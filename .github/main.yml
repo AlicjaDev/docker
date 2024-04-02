@@ -1,0 +1,24 @@
+
+name: Alicja's CI/CD with Docker 
+
+on: 
+  push: 
+    tranches: 
+      -  master
+
+jobs: 
+  build: 
+    runs-on: ubuntu-latest 
+
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Frontend Docker image
+        run: docker build -l reactapp1 -f Dockerfile . 
+
+      - name: Push Frontend Docker image to Docker Hub
+        run: | 
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker tag reactapp1 ${{ secrets.DOCKER_USERNAME }}/reactapp1
+          docker push ${{ secrets.DOCKER_USERNAME }}/reactapp1
